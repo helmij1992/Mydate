@@ -243,6 +243,26 @@ body[data-proposal-type] {
     margin: 28px auto 0;
 }
 
+.home-share-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 28px;
+}
+
+.home-share-links .home-share-panel {
+    width: 100%;
+    margin: 0;
+}
+
+.home-share-links .share-row {
+    align-items: stretch;
+}
+
+.home-share-links .share-row input {
+    flex: 1 1 100%;
+}
+
 .share-label {
     color: #b23872;
     font-size: 0.9rem;
@@ -711,6 +731,10 @@ body[data-proposal-type] {
     }
 
     .home-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-share-links {
         grid-template-columns: 1fr;
     }
 }

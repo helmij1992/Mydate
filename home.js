@@ -9,10 +9,27 @@ const homeTitle = document.getElementById('home-title')
 const homeSubtitle = document.getElementById('home-subtitle')
 const primaryLink = document.querySelector('.home-primary')
 const cardLinks = Array.from(document.querySelectorAll('.question-card'))
-const shareUrlInput = document.getElementById('share-url')
-const copyLinkBtn = document.getElementById('copy-link-btn')
-const shareStatus = document.getElementById('share-status')
 const homePreviewImage = document.getElementById('home-preview-gif')
+const shareConfigs = [
+    {
+        base: 'valentine.html',
+        input: document.getElementById('share-url-valentine'),
+        button: document.getElementById('copy-link-btn-valentine'),
+        status: document.getElementById('share-status-valentine')
+    },
+    {
+        base: 'date.html',
+        input: document.getElementById('share-url-date'),
+        button: document.getElementById('copy-link-btn-date'),
+        status: document.getElementById('share-status-date')
+    },
+    {
+        base: 'married.html',
+        input: document.getElementById('share-url-married'),
+        button: document.getElementById('copy-link-btn-married'),
+        status: document.getElementById('share-status-married')
+    }
+]
 
 const defaultYourName = ''
 const defaultSiteTitle = 'Cute Love Page'
@@ -131,9 +148,11 @@ function hydrateNames() {
 }
 
 function updateShareLink() {
-    const shareUrl = new URL(buildUrl('valentine.html'), window.location.href)
-    shareUrlInput.value = shareUrl.toString()
-    shareStatus.textContent = defaultShareHint
+    shareConfigs.forEach((config) => {
+        const shareUrl = new URL(buildUrl(config.base), window.location.href)
+        config.input.value = shareUrl.toString()
+        config.status.textContent = defaultShareHint
+    })
 }
 
 hydrateNames()
@@ -147,12 +166,14 @@ document.getElementById('surprise-btn').addEventListener('click', () => {
     window.location.href = buildUrl(target)
 })
 
-copyLinkBtn.addEventListener('click', async () => {
-    try {
-        await navigator.clipboard.writeText(shareUrlInput.value)
-        shareStatus.textContent = 'Link copied. Send it to your person 💕'
-    } catch (error) {
-        shareUrlInput.select()
-        shareStatus.textContent = 'Copy failed, but the link is selected for you.'
-    }
+shareConfigs.forEach((config) => {
+    config.button.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(config.input.value)
+            config.status.textContent = 'Link copied. Send it to your person 💕'
+        } catch (error) {
+            config.input.select()
+            config.status.textContent = 'Copy failed, but the link is selected for you.'
+        }
+    })
 })
