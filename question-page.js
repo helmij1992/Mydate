@@ -1,34 +1,45 @@
+const pageType = document.body.dataset.proposalType || 'valentine'
+
+const successTargets = {
+    valentine: 'yes.html?type=valentine',
+    date: 'yes.html?type=date',
+    married: 'yes.html?type=married'
+}
+
 const gifStages = [
     "https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif",
     "https://media.tenor.com/4F0K8CdxlRIAAAAj/cat-surprised.gif",
     "https://media.tenor.com/q8vI0d0H5tAAAAAj/cat-begging.gif",
-    "https://media.tenor.com/x8S4y7QK5dEAAAAj/peachcat-cry.gif",
     "https://media.tenor.com/zJxj8rK9R3gAAAAj/cat-sad.gif",
-    "https://media.tenor.com/7K8rL0WvabcAAAAj/crying-cat-cat.gif",
-    "https://media.tenor.com/7K8rL0WvabcAAAAj/crying-cat-cat.gif",
     "https://media.tenor.com/7K8rL0WvabcAAAAj/crying-cat-cat.gif"
 ]
 
-const noMessages = [
-    "No",
-    "Are you positive? 🤔",
-    "Pookie please... 🥺",
-    "If you say no, I will be really sad...",
-    "I will be very sad... 😢",
-    "Please??? 💔",
-    "Don't do this to me...",
-    "Last chance! 😭",
-    "You can't catch me anyway 😜"
-]
-
-const yesTeasePokes = [
-    "try saying no first... I bet you want to know what happens 😏",
-    "go on, hit no... just once 👀",
-    "you're missing out 😈",
-    "click no, I dare you 😏"
-]
-
-let yesTeasedCount = 0
+const noMessagesByType = {
+    valentine: [
+        "No",
+        "Are you sure? 💕",
+        "Please be my Valentine... 🥺",
+        "That was a tiny heart break 💔",
+        "Still no? I'm pouting now 😢",
+        "You can't press me that easily 😜"
+    ],
+    date: [
+        "No",
+        "Not even one cute date? 🥺",
+        "I can plan snacks too... 🍓",
+        "Come on, it'll be fun 💕",
+        "You're really making me work for it 😭",
+        "Too slow, hehe 😜"
+    ],
+    married: [
+        "No",
+        "Think about forever first 💍",
+        "I promise I'd be adorable 🥺",
+        "My heart just gasped 💔",
+        "Okay this one hurts a little 😢",
+        "Nope, you can't catch this button 😜"
+    ]
+}
 
 let noClickCount = 0
 let runawayEnabled = false
@@ -36,17 +47,14 @@ let musicPlaying = true
 
 const pikachuGif = document.getElementById('pikachu-gif')
 const yesBtn = document.getElementById('yes-btn')
-const loveOptions = Array.from(document.querySelectorAll('.love-option'))
 const noBtn = document.getElementById('no-btn')
 const music = document.getElementById('bg-music')
 
-// Autoplay: audio starts muted (bypasses browser policy), unmute immediately
 music.muted = true
 music.volume = 0.3
 music.play().then(() => {
     music.muted = false
 }).catch(() => {
-    // Fallback: unmute on first interaction
     document.addEventListener('click', () => {
         music.muted = false
         music.play().catch(() => {})
@@ -60,58 +68,22 @@ function toggleMusic() {
         document.getElementById('music-toggle').textContent = '🔇'
     } else {
         music.muted = false
-        music.play()
+        music.play().catch(() => {})
         musicPlaying = true
         document.getElementById('music-toggle').textContent = '🔊'
     }
 }
 
 function handleYesClick() {
-    if (!runawayEnabled) {
-        const msg = yesTeasePokes[Math.min(yesTeasedCount, yesTeasePokes.length - 1)]
-        yesTeasedCount++
-        showTeaseMessage(msg)
-        return
-    }
-
-    window.location.href = 'yes.html'
-}
-
-function handleDateClick() {
-    window.location.href = 'date.html'
-}
-
-function handleMarriedClick() {
-    window.location.href = 'married.html'
-}
-
-function handleValentineClick() {
-    window.location.href = 'valentine.html'
-}
-
-function showTeaseMessage(msg) {
-    let toast = document.getElementById('tease-toast')
-    toast.textContent = msg
-    toast.classList.add('show')
-    clearTimeout(toast._timer)
-    toast._timer = setTimeout(() => toast.classList.remove('show'), 2500)
+    window.location.href = successTargets[pageType] || 'yes.html'
 }
 
 function handleNoClick() {
     noClickCount++
 
-    // Cycle through guilt-trip messages
+    const noMessages = noMessagesByType[pageType] || noMessagesByType.valentine
     const msgIndex = Math.min(noClickCount, noMessages.length - 1)
     noBtn.textContent = noMessages[msgIndex]
-
-    // Grow the positive buttons bigger each time
-    loveOptions.forEach((button) => {
-        const currentSize = parseFloat(window.getComputedStyle(button).fontSize)
-        button.style.fontSize = `${currentSize * 1.14}px`
-        const padY = Math.min(12 + noClickCount * 2, 24)
-        const padX = Math.min(18 + noClickCount * 4, 42)
-        button.style.padding = `${padY}px ${padX}px`
-    })
 
     const yesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize)
     yesBtn.style.fontSize = `${yesSize * 1.18}px`
@@ -119,21 +91,16 @@ function handleNoClick() {
     const yesPadX = Math.min(45 + noClickCount * 10, 120)
     yesBtn.style.padding = `${yesPadY}px ${yesPadX}px`
 
-    // Shrink No button to contrast
     if (noClickCount >= 2) {
         const noSize = parseFloat(window.getComputedStyle(noBtn).fontSize)
-        noBtn.style.fontSize = `${Math.max(noSize * 0.85, 10)}px`
+        noBtn.style.fontSize = `${Math.max(noSize * 0.86, 10)}px`
     }
 
-    // Swap cat GIF through stages
     const gifIndex = Math.min(noClickCount, gifStages.length - 1)
     swapGif(gifStages[gifIndex])
 
-    // Runaway starts at click 5
-    if (noClickCount >= 5 && !runawayEnabled) {
-        const msg = yesTeasePokes[Math.min(yesTeasedCount, yesTeasePokes.length - 1)]
-        yesTeasedCount++
-        showTeaseMessage(msg)
+    if (noClickCount >= 4 && !runawayEnabled) {
+        showTeaseMessage("The no button has trust issues now 👀")
         enableRunaway()
         runawayEnabled = true
     }
@@ -145,6 +112,14 @@ function swapGif(src) {
         pikachuGif.src = src
         pikachuGif.style.opacity = '1'
     }, 200)
+}
+
+function showTeaseMessage(msg) {
+    const toast = document.getElementById('tease-toast')
+    toast.textContent = msg
+    toast.classList.add('show')
+    clearTimeout(toast._timer)
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2500)
 }
 
 function enableRunaway() {
@@ -159,8 +134,8 @@ function runAway() {
     const maxX = window.innerWidth - btnW - margin
     const maxY = window.innerHeight - btnH - margin
 
-    const randomX = Math.random() * maxX + margin / 2
-    const randomY = Math.random() * maxY + margin / 2
+    const randomX = Math.random() * Math.max(maxX, 40) + margin / 2
+    const randomY = Math.random() * Math.max(maxY, 40) + margin / 2
 
     noBtn.style.position = 'fixed'
     noBtn.style.left = `${randomX}px`

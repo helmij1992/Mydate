@@ -1,6 +1,22 @@
 let musicPlaying = false
 
+const successContent = {
+    valentine: {
+        title: "Happy Valentine's Day! 💕",
+        message: "You're my Valentine! 💖"
+    },
+    date: {
+        title: "It's a date! 🎉",
+        message: "I can't wait to go out with you! 💕"
+    },
+    married: {
+        title: "We're getting married! 💍",
+        message: "This is my favorite yes forever. 💞"
+    }
+}
+
 window.addEventListener('load', () => {
+    applyPageContent()
     launchConfetti()
 
     // Autoplay music (works since user clicked Yes to get here)
@@ -10,6 +26,18 @@ window.addEventListener('load', () => {
     musicPlaying = true
     document.getElementById('music-toggle').textContent = '🔊'
 })
+
+function applyPageContent() {
+    const params = new URLSearchParams(window.location.search)
+    const type = params.get('type')
+    const content = successContent[type]
+
+    if (!content) return
+
+    document.title = content.title
+    document.getElementById('success-title').textContent = content.title
+    document.getElementById('success-message').textContent = content.message
+}
 
 function launchConfetti() {
     const colors = ['#ff69b4', '#ff1493', '#ff85a2', '#ffb3c1', '#ff0000', '#ff6347', '#fff', '#ffdf00']

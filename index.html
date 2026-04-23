@@ -8,22 +8,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
     <div class="hearts-bg"></div>
 
-    <div class="container">
-        <h1>Will you be my Valentine? 💕</h1>
+    <main class="home-shell">
+        <section class="home-hero">
+            <div class="home-copy">
+                <p class="home-kicker">Cute Question Collection</p>
+                <h1 class="home-title" id="home-title">Build a cute little love page for someone special.</h1>
+                <p class="home-subtitle" id="home-subtitle">
+                    Add your names, pick the mood, and let this cute cat-powered page do the blushing for you.
+                </p>
 
-        <div class="gif-container">
-            <img id="cat-gif" src="https://media.tenor.com/EBV7OT7ACfwAAAAj/u-u-qua-qua-u-quaa.gif" alt="cute character">
-        </div>
+                <div class="home-personalize">
+                    <label class="home-field">
+                        <span>Your Name</span>
+                        <input id="your-name" type="text" placeholder="Muhammad">
+                    </label>
+                    <label class="home-field">
+                        <span>Their Name</span>
+                        <input id="their-name" type="text" placeholder="Your person">
+                    </label>
+                </div>
 
-        <div class="buttons">
-            <button id="yes-btn" onclick="handleYesClick()">Yes</button>
-            <button id="no-btn" onclick="handleNoClick()">No</button>
-        </div>
-        <div id="tease-toast"></div>
-    </div>
+                <div class="home-actions">
+                    <a class="home-primary" href="valentine.html">Start with Valentine</a>
+                    <button class="home-secondary" id="surprise-btn" type="button">Surprise Me</button>
+                </div>
+
+                <div class="home-badges">
+                    <span>Valentine</span>
+                    <span>Date</span>
+                    <span>Married</span>
+                </div>
+            </div>
+
+            <div class="home-preview">
+                <div class="preview-frame">
+                    <img id="home-preview-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="cute cat dancing happily">
+                </div>
+            </div>
+        </section>
+
+        <section class="home-grid">
+            <a class="question-card" href="valentine.html">
+                <div class="question-card-tag">Sweet</div>
+                <h2>Valentine</h2>
+                <p>Lead with the classic soft launch: cute, pink, and impossible to resist.</p>
+                <span class="question-card-link">Open the Valentine page</span>
+            </a>
+
+            <a class="question-card" href="date.html">
+                <div class="question-card-tag">Flirty</div>
+                <h2>Date</h2>
+                <p>Keep it playful and direct with a fun yes/no moment for planning something special.</p>
+                <span class="question-card-link">Open the Date page</span>
+            </a>
+
+            <a class="question-card" href="married.html">
+                <div class="question-card-tag">Bold</div>
+                <h2>Married</h2>
+                <p>Go full dramatic-romantic with the forever question and extra chaos for the no button.</p>
+                <span class="question-card-link">Open the Married page</span>
+            </a>
+        </section>
+    </main>
 
     <audio id="bg-music" loop autoplay muted>
         <source src="music/beabadoobee - Glue Song (Lyrics).mp3" type="audio/mpeg">
@@ -31,6 +80,6 @@
 
     <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
 
-    <script src="script.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>

@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yay! 🎉</title>
+    <title>Let's Date! 🎉</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 </head>
-<body>
+<body data-proposal-type="date">
     <div class="hearts-bg"></div>
 
     <div class="container result-container">
-        <h1 class="hero-banner" id="success-title">Knew you would say yes! 🎉</h1>
+        <h1 class="hero-banner">Will you go on a date with me? 🎀</h1>
 
         <div class="gif-container">
-            <img id="pikachu-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating">
+            <img id="pikachu-gif" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="cute cat">
         </div>
 
-        <p class="yes-message" id="success-message">You just made me the happiest person! 💕</p>
+        <p class="page-prompt">Say yes and I’ll plan something cute for us. 🎀</p>
+
+        <div class="response-buttons">
+            <button id="yes-btn" onclick="handleYesClick()">Yes</button>
+            <button id="no-btn" onclick="handleNoClick()">No</button>
+        </div>
+
+        <div id="tease-toast"></div>
         <a class="back-link" href="index.html">Back to the question</a>
     </div>
 
@@ -29,6 +36,6 @@
 
     <button id="music-toggle" onclick="toggleMusic()" title="Toggle music">🔊</button>
 
-    <script src="yes-script.js"></script>
+    <script src="question-page.js"></script>
 </body>
 </html>
