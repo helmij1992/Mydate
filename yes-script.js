@@ -1,4 +1,5 @@
 let musicPlaying = false
+const localCuteCatAsset = 'assets/cute-cat.svg'
 
 const successContent = {
     valentine: {
@@ -17,6 +18,7 @@ const successContent = {
 
 window.addEventListener('load', () => {
     applyPageContent()
+    bindImageFallback()
     launchConfetti()
 
     // Autoplay music (works since user clicked Yes to get here)
@@ -134,4 +136,11 @@ function withNameParams(base, fromName, toName) {
     if (toName) url.searchParams.set('to', toName)
 
     return `${url.pathname.split('/').pop()}${url.search}`
+}
+
+function bindImageFallback() {
+    const successImage = document.getElementById('pikachu-gif')
+    successImage.addEventListener('error', () => {
+        successImage.src = localCuteCatAsset
+    })
 }

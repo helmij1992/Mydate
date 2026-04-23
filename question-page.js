@@ -5,6 +5,7 @@ const successTargets = {
     date: 'yes.html?type=date',
     married: 'yes.html?type=married'
 }
+const localCuteCatAsset = 'assets/cute-cat.svg'
 
 const personalizedCopy = {
     valentine: {
@@ -43,7 +44,7 @@ const personalizedCopy = {
 }
 
 const gifStages = [
-    "https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif",
+    localCuteCatAsset,
     "https://media.tenor.com/4F0K8CdxlRIAAAAj/cat-surprised.gif",
     "https://media.tenor.com/q8vI0d0H5tAAAAAj/cat-begging.gif",
     "https://media.tenor.com/zJxj8rK9R3gAAAAj/cat-sad.gif",
@@ -90,6 +91,7 @@ const pagePrompt = document.querySelector('.page-prompt')
 const backLink = document.querySelector('.back-link')
 
 applyPagePersonalization()
+bindImageFallback()
 
 music.muted = true
 music.volume = 0.3
@@ -226,4 +228,13 @@ function escapeHtml(value) {
         .replaceAll('>', '&gt;')
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#39;')
+}
+
+function bindImageFallback() {
+    pikachuGif.addEventListener('error', () => {
+        if (!pikachuGif.src.endsWith(localCuteCatAsset)) {
+            pikachuGif.src = localCuteCatAsset
+            pikachuGif.style.opacity = '1'
+        }
+    })
 }

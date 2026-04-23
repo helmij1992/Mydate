@@ -12,10 +12,12 @@ const cardLinks = Array.from(document.querySelectorAll('.question-card'))
 const shareUrlInput = document.getElementById('share-url')
 const copyLinkBtn = document.getElementById('copy-link-btn')
 const shareStatus = document.getElementById('share-status')
+const homePreviewImage = document.getElementById('home-preview-gif')
 
 const defaultYourName = 'muhd helmi'
 const defaultSiteTitle = `${defaultYourName} | Cute Love Page`
 const defaultShareHint = 'Your personalized link updates automatically.'
+const localCuteCatAsset = 'assets/cute-cat.svg'
 
 const defaultCopy = {
     title: 'Build a cute little love page for someone special.',
@@ -24,6 +26,9 @@ const defaultCopy = {
 
 music.muted = true
 music.volume = 0.3
+homePreviewImage.addEventListener('error', () => {
+    homePreviewImage.src = localCuteCatAsset
+})
 music.play().then(() => {
     music.muted = false
 }).catch(() => {
