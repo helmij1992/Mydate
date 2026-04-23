@@ -238,6 +238,11 @@ body[data-proposal-type] {
     box-shadow: 0 16px 34px rgba(185, 78, 132, 0.1);
 }
 
+.home-share-panel {
+    width: min(100%, 620px);
+    margin: 28px auto 0;
+}
+
 .share-label {
     color: #b23872;
     font-size: 0.9rem;
