@@ -14,8 +14,8 @@ const copyLinkBtn = document.getElementById('copy-link-btn')
 const shareStatus = document.getElementById('share-status')
 const homePreviewImage = document.getElementById('home-preview-gif')
 
-const defaultYourName = 'muhd helmi'
-const defaultSiteTitle = `${defaultYourName} | Cute Love Page`
+const defaultYourName = ''
+const defaultSiteTitle = 'Cute Love Page'
 const defaultShareHint = 'Your personalized link updates automatically.'
 const localCuteCatAsset = 'assets/cute-cat.svg'
 
