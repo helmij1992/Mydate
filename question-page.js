@@ -45,10 +45,10 @@ const personalizedCopy = {
 
 const gifStages = [
     localCuteCatAsset,
-    "https://media.tenor.com/4F0K8CdxlRIAAAAj/cat-surprised.gif",
-    "https://media.tenor.com/q8vI0d0H5tAAAAAj/cat-begging.gif",
-    "https://media.tenor.com/zJxj8rK9R3gAAAAj/cat-sad.gif",
-    "https://media.tenor.com/7K8rL0WvabcAAAAj/crying-cat-cat.gif"
+    localCuteCatAsset,
+    localCuteCatAsset,
+    localCuteCatAsset,
+    localCuteCatAsset
 ]
 
 const noMessagesByType = {
@@ -150,11 +150,22 @@ function handleNoClick() {
 }
 
 function swapGif(src) {
-    pikachuGif.style.opacity = '0'
-    setTimeout(() => {
-        pikachuGif.src = src
+    const nextImage = new Image()
+
+    nextImage.onload = () => {
+        pikachuGif.style.opacity = '0'
+        setTimeout(() => {
+            pikachuGif.src = src
+            pikachuGif.style.opacity = '1'
+        }, 120)
+    }
+
+    nextImage.onerror = () => {
+        pikachuGif.src = localCuteCatAsset
         pikachuGif.style.opacity = '1'
-    }, 200)
+    }
+
+    nextImage.src = src
 }
 
 function showTeaseMessage(msg) {
