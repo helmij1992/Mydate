@@ -5,7 +5,7 @@ const successTargets = {
     date: 'yes.html?type=date',
     married: 'yes.html?type=married'
 }
-const localCuteCatAsset = 'assets/cute-cat.svg'
+const localCuteCatAsset = 'assets/story-happy.svg'
 
 const personalizedCopy = {
     valentine: {
@@ -44,11 +44,11 @@ const personalizedCopy = {
 }
 
 const gifStages = [
-    localCuteCatAsset,
-    localCuteCatAsset,
-    localCuteCatAsset,
-    localCuteCatAsset,
-    localCuteCatAsset
+    'assets/story-happy.svg',
+    'assets/story-surprised.svg',
+    'assets/story-pleading.svg',
+    'assets/story-sad.svg',
+    'assets/story-crying.svg'
 ]
 
 const noMessagesByType = {
