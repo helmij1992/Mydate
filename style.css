@@ -4,6 +4,23 @@
     box-sizing: border-box;
 }
 
+:root {
+    --page-max-width: 72rem;
+    --question-max-width: 60rem;
+    --surface-banner: rgba(181, 201, 243, 0.88);
+    --brand-pink: #d63384;
+    --brand-copy-strong: #c43b78;
+    --page-pad-y: clamp(1.5rem, 3vw, 3rem);
+    --page-pad-x: clamp(1rem, 3vw, 2rem);
+    --stack-gap: clamp(1rem, 2vw, 1.75rem);
+    --hero-radius: clamp(1rem, 1.5vw, 1.5rem);
+    --hero-font: clamp(2rem, 4vw, 4rem);
+    --question-hero-font: clamp(1.8rem, 4.8vw, 3.7rem);
+    --prompt-font: clamp(1.05rem, 1.6vw, 1.3rem);
+    --yes-font: clamp(1.1rem, 1.8vw, 1.55rem);
+    --no-font: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
 body {
     background-color: #FFE4E8;
     font-family: 'Nunito', sans-serif;
@@ -22,6 +39,13 @@ body.home-page {
     overflow-x: hidden;
     overflow-y: auto;
     align-items: flex-start;
+}
+
+body[data-proposal-type] {
+    overflow-x: hidden;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: var(--page-pad-y) var(--page-pad-x);
 }
 
 /* Floating hearts background */
@@ -60,8 +84,8 @@ body.home-page {
     position: relative;
     z-index: 1;
     text-align: center;
-    width: min(100%, 1040px);
-    padding: 40px 20px 56px;
+    width: min(100%, var(--page-max-width));
+    padding: var(--page-pad-y) var(--page-pad-x) calc(var(--page-pad-y) * 1.3);
 }
 
 .home-shell {
@@ -333,17 +357,32 @@ body.home-page {
 }
 
 .hero-banner {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 1vw, 0.9rem);
+    flex-wrap: wrap;
     padding: 14px 28px;
-    background: rgba(181, 201, 243, 0.88);
-    border-radius: 4px;
-    font-size: clamp(2rem, 4vw, 4rem);
-    color: #d63384;
+    background: var(--surface-banner);
+    border-radius: var(--hero-radius);
+    font-size: var(--hero-font);
+    color: var(--brand-pink);
     font-weight: 900;
     margin-bottom: 28px;
     text-shadow: 3px 3px 0 rgba(214, 51, 132, 0.18);
     animation: wiggle 2s ease-in-out infinite;
     line-height: 1.05;
+}
+
+.hero-banner-text {
+    display: inline-block;
+    max-width: 100%;
+    text-wrap: balance;
+}
+
+.hero-banner-emoji {
+    flex: 0 0 auto;
+    line-height: 1;
 }
 
 @keyframes wiggle {
@@ -352,14 +391,15 @@ body.home-page {
 }
 
 .gif-container {
-    margin: 20px auto;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 #pikachu-gif {
-    width: min(100%, 600px);
-    max-height: 470px;
+    width: min(100%, clamp(17rem, 42vw, 33rem));
+    max-height: min(44vh, 33rem);
     object-fit: contain;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
     transition: opacity 0.3s ease;
@@ -407,10 +447,10 @@ body.home-page {
     color: white;
     border: none;
     border-radius: 16px;
-    font-size: 1.6rem;
+    font-size: var(--yes-font);
     font-weight: 900;
     font-family: 'Nunito', sans-serif;
-    padding: 18px 45px;
+    padding: clamp(0.95rem, 1.8vw, 1.2rem) clamp(2rem, 4vw, 2.8rem);
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
@@ -431,10 +471,10 @@ body.home-page {
     color: white;
     border: none;
     border-radius: 12px;
-    font-size: 1rem;
+    font-size: var(--no-font);
     font-weight: 700;
     font-family: 'Nunito', sans-serif;
-    padding: 12px 28px;
+    padding: clamp(0.8rem, 1.4vw, 0.95rem) clamp(1.3rem, 2vw, 1.8rem);
     cursor: pointer;
     transition: background 0.2s, left 0.25s ease, top 0.25s ease;
     box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4);
@@ -485,17 +525,21 @@ body.home-page {
 }
 
 .result-container {
-    max-width: 980px;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: var(--stack-gap);
+    width: min(100%, var(--question-max-width));
+    max-width: var(--question-max-width);
+    margin: 0 auto;
 }
 
 .result-container .hero-banner {
-    display: block;
-    width: min(100%, 980px);
-    margin: 0 auto 28px;
-    padding: 18px 24px;
-    font-size: clamp(1.9rem, 3.2vw, 3.9rem);
-    line-height: 1.12;
-    text-wrap: balance;
+    width: 100%;
+    margin: 0;
+    padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2rem);
+    font-size: var(--question-hero-font);
+    line-height: 1.08;
 }
 
 .choice-row {
@@ -527,24 +571,28 @@ body.home-page {
 }
 
 .page-prompt {
-    font-size: 1.2rem;
-    color: #c43b78;
+    max-width: 38rem;
+    font-size: var(--prompt-font);
+    color: var(--brand-copy-strong);
     font-weight: 700;
-    margin-top: 20px;
+    margin-top: 0;
+    line-height: 1.45;
+    text-wrap: balance;
 }
 
 .response-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 18px;
+    gap: clamp(0.85rem, 1.8vw, 1.25rem);
     flex-wrap: wrap;
-    margin-top: 22px;
+    margin-top: 0;
+    width: 100%;
 }
 
 .back-link {
     display: inline-block;
-    margin-top: 18px;
+    margin-top: 0.25rem;
     color: #b03060;
     font-weight: 800;
     text-decoration: none;
@@ -587,10 +635,8 @@ body.home-page {
     }
 
     .result-container .hero-banner {
-        width: 100%;
-        font-size: clamp(1.8rem, 8vw, 2.7rem);
-        line-height: 1.16;
-        padding: 16px 14px;
+        padding: 1rem 0.95rem;
+        line-height: 1.12;
     }
 
     .buttons {
@@ -601,9 +647,6 @@ body.home-page {
         gap: 12px;
     }
 
-    #no-btn {
-        padding: 14px 24px;
-    }
 }
 
 @media (max-width: 980px) {

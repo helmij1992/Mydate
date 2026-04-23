@@ -8,8 +8,9 @@ const successTargets = {
 
 const personalizedCopy = {
     valentine: {
-        defaultTitle: "Will you be my Valentine? 💕",
-        title: (toName) => `Will you be my Valentine, ${toName}? 💕`,
+        emoji: "💕",
+        defaultTitle: "Will you be my Valentine?",
+        title: (toName) => `Will you be my Valentine, ${toName}?`,
         prompt: (fromName, toName) => {
             if (fromName && toName) return `${fromName} has one tiny question for ${toName}. 💖`
             if (toName) return `One tiny yes from ${toName} would make this day extra sweet. 💕`
@@ -18,8 +19,9 @@ const personalizedCopy = {
         }
     },
     date: {
-        defaultTitle: "Will you go on a date with me? 🎀",
-        title: (toName) => `Will you go on a date with me, ${toName}? 🎀`,
+        emoji: "🎀",
+        defaultTitle: "Will you go on a date with me?",
+        title: (toName) => `Will you go on a date with me, ${toName}?`,
         prompt: (fromName, toName) => {
             if (fromName && toName) return `${fromName} wants to plan something cute with ${toName}. 🎀`
             if (toName) return `Say yes, ${toName}, and something cute will be planned just for you. 🎀`
@@ -28,8 +30,9 @@ const personalizedCopy = {
         }
     },
     married: {
-        defaultTitle: "Will you marry me? 💍",
-        title: (toName) => `Will you marry me, ${toName}? 💍`,
+        emoji: "💍",
+        defaultTitle: "Will you marry me?",
+        title: (toName) => `Will you marry me, ${toName}?`,
         prompt: (fromName, toName) => {
             if (fromName && toName) return `${fromName} is asking ${toName} the forever question. 💍`
             if (toName) return `${toName}, this is the forever question, so be nice to me. 💍`
@@ -207,8 +210,20 @@ function applyPagePersonalization() {
 
     const titleText = toName ? copy.title(toName) : copy.defaultTitle
 
-    document.title = titleText
-    heroBanner.textContent = titleText
+    document.title = `${titleText} ${copy.emoji}`
+    heroBanner.innerHTML = `
+        <span class="hero-banner-text">${escapeHtml(titleText)}</span>
+        <span class="hero-banner-emoji" aria-hidden="true">${copy.emoji}</span>
+    `
     pagePrompt.textContent = copy.prompt(fromName, toName)
     backLink.href = withNameParams('index.html')
+}
+
+function escapeHtml(value) {
+    return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
 }
